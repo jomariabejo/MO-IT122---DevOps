@@ -40,10 +40,10 @@
 
 | Team Member   | Docker Installed | Git Installed | VS Code Installed | Can Run Hello World Container |
 |---------------|------------------|---------------|--------------------|-------------------------------|
-| [Name]        | ✅               | ✅            | ✅                | ✅                            |
-| [Name]        | ✅               | ✅            | ✅                | ✅                            |
-| [Name]        | ✅               | ✅            | ✅                | ✅                            |
-| [Name]        | ✅               | ✅            | ✅                | ✅                            |
+| [Name]        | ❌               | ❌            | ❌                | ❌                            |
+| [Name]        | ❌               | ❌            | ❌                | ❌                            |
+| [Name]        | ❌               | ❌            | ❌                | ❌                            |
+| [Name]        | ❌               | ❌            | ❌                | ❌                            |
 
 ---
 
