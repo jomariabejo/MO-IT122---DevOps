@@ -1,0 +1,70 @@
+-- Enable UUID generation if not already enabled
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+-- Enum for user roles
+CREATE TYPE "UserRole" AS ENUM ('Admin', 'User');
+
+-- Table: User
+CREATE TABLE "User" (
+    id TEXT PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT,
+    email TEXT UNIQUE,
+    "emailVerified" TIMESTAMP,
+    image TEXT,
+    password TEXT,
+    role "UserRole" DEFAULT 'User',
+    "isTwoFactorEnabled" BOOLEAN DEFAULT FALSE
+);
+
+-- Table: Account
+CREATE TABLE "Account" (
+    id TEXT PRIMARY KEY DEFAULT gen_random_uuid(),
+    "userId" TEXT NOT NULL,
+    type TEXT NOT NULL,
+    provider TEXT NOT NULL,
+    "providerAccountId" TEXT NOT NULL,
+    refresh_token TEXT,
+    access_token TEXT,
+    expires_at INTEGER,
+    token_type TEXT,
+    scope TEXT,
+    id_token TEXT,
+    session_state TEXT,
+    CONSTRAINT account_user_fk FOREIGN KEY ("userId") REFERENCES "User"(id) ON DELETE CASCADE,
+    CONSTRAINT account_provider_unique UNIQUE (provider, "providerAccountId")
+);
+
+-- Table: VerificationToken
+CREATE TABLE "VerificationToken" (
+    id TEXT PRIMARY KEY DEFAULT gen_random_uuid(),
+    email TEXT NOT NULL,
+    token TEXT NOT NULL UNIQUE,
+    expires TIMESTAMP NOT NULL,
+    CONSTRAINT verification_email_token_unique UNIQUE (email, token)
+);
+
+-- Table: ResetPasswordToken
+CREATE TABLE "ResetPasswordToken" (
+    id TEXT PRIMARY KEY DEFAULT gen_random_uuid(),
+    email TEXT NOT NULL,
+    token TEXT NOT NULL UNIQUE,
+    expires TIMESTAMP NOT NULL,
+    CONSTRAINT reset_email_token_unique UNIQUE (email, token)
+);
+
+-- Table: TwoFactorToken
+CREATE TABLE "TwoFactorToken" (
+    id TEXT PRIMARY KEY DEFAULT gen_random_uuid(),
+    email TEXT NOT NULL,
+    token TEXT NOT NULL UNIQUE,
+    expires TIMESTAMP NOT NULL,
+    CONSTRAINT twofactor_email_token_unique UNIQUE (email, token)
+);
+
+-- Table: TwoFactorConfirmation
+CREATE TABLE "TwoFactorConfirmation" (
+    id TEXT PRIMARY KEY DEFAULT gen_random_uuid(),
+    "userId" TEXT NOT NULL UNIQUE,
+    expires TIMESTAMP NOT NULL,
+    CONSTRAINT tfc_user_fk FOREIGN KEY ("userId") REFERENCES "User"(id) ON DELETE CASCADE
+);
