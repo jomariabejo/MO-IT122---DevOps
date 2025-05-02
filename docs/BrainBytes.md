@@ -42,7 +42,7 @@ Goal: Eliminate the “it works on my machine” issue by using Docker to ensure
 Dockerized setup for:
 - Frontend (Next.js)
 - Backend (Node.js)
-- Database (MongoDB Atlas)
+- Database (MongoDB Atlas Or PostgresSQL)
 - Docker Compose configuration for multi-container networking
 - Basic AI chat interface with:
 - Message persistence in MongoDB
