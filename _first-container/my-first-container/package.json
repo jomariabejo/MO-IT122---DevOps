@@ -1,0 +1,11 @@
+{
+    "name": "my-first-container",
+    "version": "1.0.0",
+    "description": "My first container",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "author": "Jomari Abejo",
+    "license": "MIT"
+}
